@@ -1,21 +1,37 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@reach/tabs';
 import '@reach/tabs/styles.css';
-import NoErrorHandling from './components/NoErrorHandling';
+import ErrorHandlingErrorBoundaries from './components/ErrorHandlingErrorBoundaries';
+const NoErrorHandling = lazy(() => import('./components/NoErrorHandling'));
+const ErrorHandlingTry = lazy(() =>
+  import('./components/ErrorHandlingTryCatch')
+);
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{ maxWidth: '980px', margin: '0 auto' }}>
       <Tabs>
         <TabList>
           <Tab>No error handling</Tab>
-          <Tab>Error handling with try/catch</Tab>
+          <Tab>With try/catch</Tab>
+          <Tab>With React Error Boundaries</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            <NoErrorHandling />
+            <Suspense fallback="loading...">
+              <NoErrorHandling />
+            </Suspense>
           </TabPanel>
-          <TabPanel>Second</TabPanel>
+          <TabPanel>
+            <Suspense fallback="loading...">
+              <ErrorHandlingTry />
+            </Suspense>
+          </TabPanel>
+          <TabPanel>
+            <Suspense fallback="loading...">
+              <ErrorHandlingErrorBoundaries />
+            </Suspense>
+          </TabPanel>
         </TabPanels>
       </Tabs>
     </div>

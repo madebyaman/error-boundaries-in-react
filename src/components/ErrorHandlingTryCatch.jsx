@@ -1,10 +1,23 @@
 import React from 'react';
 
+function ErrorFallback({error}) {
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre>{error.message}</pre>
+    </div>
+  )
+}
+
 const YourName = ({ name }) => {
+  try {
     return <p>HELLO {name.toUpperCase()}</p>
+  } catch(e) {
+    return <ErrorFallback error={e} />
+  }
 };
 
-export default function NoErrorHandling() {
+export default function ErrorHandlingTry() {
   const [name, setName] = React.useState('');
 
   const handleInputChange = (e) => {
@@ -22,7 +35,7 @@ export default function NoErrorHandling() {
         placeholder='Your Name'
       />
       <button className='outline secondary' onClick={() => setName(undefined)}>Click me to throw an error!</button>
-      <YourName name={name}/>
+      <YourName name={name} />
       </>
   )
 }
