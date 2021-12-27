@@ -26,7 +26,7 @@ export default function ErrorHandlingTry() {
 
   return (
     <>
-    <h2>No error handling</h2>
+    <h2>try-catch error handling</h2>
       <input
         type="text"
         id="pokemon"
